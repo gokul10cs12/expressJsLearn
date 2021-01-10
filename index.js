@@ -1,7 +1,16 @@
 const express=require('express');
 const logger= require('./logger');
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
+
 const app=express();
 const PORT = process.env.PORT || 5000;
+sslCredentials = {
+  key: fs.readFileSync('./certificates/server.key'),
+  cert: fs.readFileSync('./certificates/server.crt')
+};
+const server= https.createServer({key: sslCredentials.key, cert: sslCredentials.cert}, app);
 counter = 0;
 const jsonResponse = {"menu": {
     "id": "file",
@@ -35,4 +44,4 @@ app.get('/api/info', (req, res) => {
   console.log(`counter ${counter}`); 
 } );
 
-app.listen(PORT, () => console.log(`app started on PORT: ${PORT}`));
+server.listen(PORT, () => console.log(`app started on PORT: ${PORT}`));
