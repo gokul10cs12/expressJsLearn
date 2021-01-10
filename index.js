@@ -3,6 +3,7 @@ const logger= require('./logger');
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
+const cookieParser = require('cookie-parser');
 
 const app=express();
 const PORT = process.env.PORT || 5000;
@@ -28,9 +29,12 @@ const jsonResponse = {"menu": {
 
 
 app.use(logger);
+// app.use(cookieParser());
 app.get('/', (req, res) => {
-    res.send('<h1>hello world</h1>');
+  res.cookie('name', 'express').json({'status': 'cookie status success'});
 });
+
+
 
 app.get('/api/info', (req, res) => {
   counter +=1;
