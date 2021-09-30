@@ -4,6 +4,7 @@ const http = require('http');
 const https = require('https');
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
+const product = require('./products');
 
 const app=express();
 const PORT = process.env.PORT || 5000;
@@ -47,5 +48,9 @@ app.get('/api/info', (req, res) => {
   
   console.log(`counter ${counter}`); 
 } );
+
+app.get('/api/products', (req, res) =>{
+  res.json(product);
+});
 
 server.listen(PORT, () => console.log(`app started on PORT: ${PORT}`));
