@@ -12,7 +12,7 @@ sslCredentials = {
   key: fs.readFileSync('./certificates/server.key'),
   cert: fs.readFileSync('./certificates/server.crt')
 };
-const server= https.createServer({key: sslCredentials.key, cert: sslCredentials.cert}, app);
+const server= http.createServer({key: sslCredentials.key, cert: sslCredentials.cert}, app);
 counter = 0;
 const jsonResponse = {"menu": {
     "id": "file",
@@ -50,6 +50,10 @@ app.get('/api/info', (req, res) => {
 } );
 
 app.get('/api/products', (req, res) =>{
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
+  res.setHeader('Access-Control-Allow-Credentials', true); // If needed
   res.json(product);
 });
 
